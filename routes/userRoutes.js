@@ -24,8 +24,7 @@ router.post("/signin", (req, res, next) => {
       const token = jwt.sign({ id: user._id }, tokenSecret);
       res.status(200).send({
         message: "auth successful",
-        token,
-        id: user._id
+        token
       });
     } else {
       next({status: 401, error: "auth failed"});
