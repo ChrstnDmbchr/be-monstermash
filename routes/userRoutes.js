@@ -6,6 +6,7 @@ const models = require('../models')
 router.post("/signin", (req, res, next) => {
   models.User.findOne({username: req.body.username})
   .then(user => {
+    if (!user) return next({status: 404, error: "user not found"})
     return bcrypt.compare(req.body.password, user.password)
   })
   .then(result => {
@@ -17,7 +18,9 @@ router.post("/signin", (req, res, next) => {
       next({status: 401, error: "auth failed"})
     }
   })
-  .catch(err => console.log(err))
+  .catch(err => {
+    next({status: 500, error: err})
+  })
 });
 
 module.exports = router;
