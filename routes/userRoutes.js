@@ -1,18 +1,21 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const models = require('../models')
+const models = require('../models');
+const tokenSecret = require('../config').tokenSecret;
 
 router.post("/signin", (req, res, next) => {
   models.User.findOne({username: req.body.username})
   .then(user => {
     if (!user) return next({status: 404, error: "user not found"})
-    return bcrypt.compare(req.body.password, user.password)
+    return Promise.all([bcrypt.compare(req.body.password, user.password), user])
   })
-  .then(result => {
+  .then(([result, user]) => {
     if (result) {
+      const token = jwt.sign({ id: user._id }, tokenSecret)
       res.status(200).send({
-        message: "auth successful"
+        message: "auth successful",
+        token
       })
     } else {
       next({status: 401, error: "auth failed"})
