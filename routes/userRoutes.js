@@ -6,7 +6,10 @@ const models = require('../models')
 router.post("/signin", (req, res, next) => {
   models.User.findOne({username: req.body.username})
   .then(user => {
-    if (bcrypt.compareSync(req.body.password, user.password)) {
+    return bcrypt.compare(req.body.password, user.password)
+  })
+  .then(result => {
+    if (result) {
       res.status(200).send({
         message: "auth successful"
       })
