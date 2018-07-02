@@ -8,6 +8,6 @@ module.exports = (req, res, next) => {
     req.userData = decoded;
     next();
   } catch (err) {
-    return next({ status: 401, error: 'auth middlewear failed' })
+    return next({ status: 401, error: 'auth failed' })
   };
 };
