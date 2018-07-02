@@ -3,12 +3,16 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const models = require('../models');
 const tokenSecret = require('../config').tokenSecret;
+const checkAuth = require('../middlewear/check-auth')
 
-router.get("/:userId", (req, res, next) => {
-  models.User.findById(req.params.userId)
+router.get("/", checkAuth, (req, res, next) => {
+  models.User.findById(req.userData.id)
   .then(user => {
     if (!user) return next({status: 404, error: 'user not found'});
-    res.status(200).send({ user });
+    res.status(200).send({
+      id: user._id,
+      username: user.username
+    });
   })
   .catch(err => next({status: 500, error: err}));
 });
