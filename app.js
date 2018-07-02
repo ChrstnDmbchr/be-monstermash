@@ -10,7 +10,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors')
 
-//const apiRoutes = require('./routes/apiRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 
 mongoose.connect(db_url);
 
@@ -18,9 +18,9 @@ if (process.env.NODE_ENV === 'dev') app.use(morgan('dev'));
 app.use(bodyParser);
 app.use(cors());
 
-//app.use('/api', apiRoutes);
+app.use('/api', apiRoutes);
 
-app.use('/*', (req, res, next) => {
+app.use('*', (req, res, next) => {
   next({status: 404, error: 'route not found'});
 });
 
