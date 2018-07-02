@@ -8,7 +8,7 @@ const app = require('express')();
 const bodyParser = require('body-parser').json();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const cors = require('cors')
+const cors = require('cors');
 
 const apiRoutes = require('./routes/apiRoutes');
 

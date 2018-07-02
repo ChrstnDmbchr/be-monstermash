@@ -1,9 +1,7 @@
-const router = require('express').Router()
+const router = require('express').Router();
 
-router.get("/", (req, res, next) => {
-  res.status(200).send({
-    message: "working"
-  })
-})
+const userRoutes = require('./userRoutes');
 
-module.exports = router
+router.use("/user", userRoutes);
+
+module.exports = router;
