@@ -14,6 +14,7 @@ function dbSeed (dbUrl) {
   })
   .then(([userData]) => {
     console.log(`${userData.length} Users seeded`)
+    return userData
   })
   .catch(err => {
     console.log(err);
