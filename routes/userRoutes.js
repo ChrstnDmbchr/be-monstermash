@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const models = require('../models');
 const tokenSecret = require('../config').tokenSecret;
-const checkAuth = require('../middlewear/check-auth')
+const checkAuth = require('../middleware/checkAuth')
 
 router.get("/", checkAuth, (req, res, next) => {
   models.User.findById(req.userData.id)
