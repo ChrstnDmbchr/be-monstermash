@@ -29,15 +29,15 @@ exports.getByID = (req, res, next) => {
   });
 };
 
-exports.getOldest = (req, res, next) => {
-  res.status(200).send({
-    message: "Get oldest route working"
-  })
-}
-
 exports.postNewMash = (req, res, next) => {
   res.status(200).send({
     message: "post new route working"
+  })
+}
+
+exports.getOldest = (req, res, next) => {
+  res.status(200).send({
+    message: "Get oldest route working"
   })
 }
 

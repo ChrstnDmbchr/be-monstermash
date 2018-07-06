@@ -159,7 +159,7 @@ describe('API Endpoints - Success', () => {
       });
     });
 
-    it('GET - /api/mash/getmash/:mashid', () => {
+    it('GET - /api/mash/getmash/:mashid - ID not found', () => {
       it('GET - /api/mash/getmash/:mashid', () => {
         mashId[0] = '6'
         return request
