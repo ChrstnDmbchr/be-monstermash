@@ -133,6 +133,7 @@ describe('API Endpoints - Success', () => {
       expect(res.status).to.equal(201);
       expect(res.body.message).to.equal('monster mash updated');
       expect(res.body.updatedMash.users.length).to.equal(2);
+      expect(res.body.updatedMash.imageData.length).to.equal(2);
       expect(res.body.updatedMash.phase).to.equal('legs')
     });
   });
