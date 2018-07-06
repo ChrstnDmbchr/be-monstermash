@@ -70,6 +70,16 @@ describe('API Endpoints - Success', () => {
     });
   })
 
+  it('GET - /api/mash/all', () => {
+    return request
+    .get('/api/mash/all')
+    .then(res => {
+      expect(res.status).to.equal(200);
+      expect(res.body.message).to.equal("all monster mashes")
+      expect(res.body.mashes.length).to.equal(3)
+    })
+  })
+
   describe('API Endpoints - Failure', () => {
     it('POST - /api/user/signin - Incorrect password', () => {
       return request

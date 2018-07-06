@@ -1,10 +1,17 @@
 const models = require('../models');
 
 exports.getAll = (req, res, next) => {
-  res.status(200).send({
-    message: "Get all route working"
+  models.Mash.find({})
+  .then(mashes => {
+    res.status(200).send({
+      message: "all monster mashes",
+      mashes
+    });
   })
-}
+  .catch(err => {
+    next({status: 500, error: err})
+  });
+};
 
 exports.getByID = (req, res, next) => {
   res.status(200).send({
