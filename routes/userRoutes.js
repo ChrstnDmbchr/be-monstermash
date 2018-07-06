@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const models = require('../models');
 const tokenSecret = require('../config').tokenSecret;
-const checkAuth = require('../middleware/checkAuth')
+const saltRounds = require('../config').saltRounds;
+const checkAuth = require('../middleware/checkAuth');
 
 router.get("/", checkAuth, (req, res, next) => {
   models.User.findById(req.userData.id)
@@ -38,5 +39,29 @@ router.post("/signin", (req, res, next) => {
     next({status: 500, error: err});
   });
 });
+
+router.post("/signup", (req, res, next) => {
+  models.User.findOne({ username: req.body.username })
+  .then(user => {
+    if (!user) {
+      return models.User.create({
+        username: req.body.username,
+        password: bcrypt.hashSync(req.body.password, saltRounds)
+      })
+    } else {
+      next({status: 400, error: 'username already exists'})
+    }
+  })
+  .then(newUser => {
+    const token = jwt.sign({ id: newUser._id }, tokenSecret, { expiresIn: "1h" });
+    res.status(200).send({
+      message: "user successfully created",
+      token
+    });
+  })
+  .catch(err => {
+    next({status: 500, error: err});
+  })
+})
 
 module.exports = router;

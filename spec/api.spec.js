@@ -56,6 +56,20 @@ describe('API Endpoints - Success', () => {
     })
   })
 
+  it('POST - /api/user/signup', () => {
+    return request
+    .post('/api/user/signup')
+    .send({
+      username: "user5",
+      password: "password5",
+    })
+    .then(res => {
+      expect(res.body.message).to.equal("user successfully created");
+      expect(res.body.token).to.be.a('string')
+      expect(res.status).to.equal(200);
+    });
+  })
+
   describe('API Endpoints - Failure', () => {
     it('POST - /api/user/signin - Incorrect password', () => {
       return request
@@ -104,6 +118,20 @@ describe('API Endpoints - Success', () => {
         expect(res.body.error).to.equal('auth failed');
         expect(res.body.status).to.equal(401);
       })
+    })
+
+    it('POST - /api/user/signup - username already exists', () => {
+      return request
+      .post('/api/user/signup')
+      .send({
+        username: "user1",
+        password: "password1",
+      })
+      .then(res => {
+        expect(res.body.status).to.equal(400);
+        expect(res.body.error).to.equal("username already exists");
+        expect(res.status).to.equal(400);
+      });
     })
   })
 });
