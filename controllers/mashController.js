@@ -38,7 +38,7 @@ exports.postNewMash = (req, res, next) => {
 
 exports.getOldest = (req, res, next) => {
   models.Mash.findOne({users: { $nin: [mongoose.Types.ObjectId(req.userData.id)] }, phase: { $ne: 'completed' }})
-  .sort({lastModified: 1}).limit(1)
+  .sort({lastModified: 1})
   .then(mash => {
     if (!mash) {
       return next({status: 404, error: 'no suitable mashes found'})
