@@ -1,14 +1,20 @@
 const models = require('../models');
 
-exports.getOldest = (req, res, next) => {
-  res.status(200).send({
-    message: "Get oldest route working"
-  })
-}
-
 exports.getAll = (req, res, next) => {
   res.status(200).send({
     message: "Get all route working"
+  })
+}
+
+exports.getByID = (req, res, next) => {
+  res.status(200).send({
+    message: `Get by id ${req.params.mashid} route working`
+  })
+}
+
+exports.getOldest = (req, res, next) => {
+  res.status(200).send({
+    message: "Get oldest route working"
   })
 }
 

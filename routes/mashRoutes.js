@@ -3,9 +3,11 @@ const mashController = require('../controllers/mashController');
 
 const checkAuth = require('../middleware/checkAuth');
 
-router.get("/", checkAuth, mashController.getOldest);
-
 router.get("/all", mashController.getAll);
+
+router.get("/mash/:mashid", mashController.getByID)
+
+router.get("/continuemash", checkAuth, mashController.getOldest);
 
 router.post("/newmash", checkAuth, mashController.postNewMash);
 
