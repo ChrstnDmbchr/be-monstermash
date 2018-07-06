@@ -43,7 +43,7 @@ exports.postNewMash = (req, res, next) => {
     lastModified: moment().format()
   })
   .then(mash => {
-    res.status(200).send({
+    res.status(201).send({
       message: "new monster mash created successfully",
       mash
     });
@@ -66,10 +66,29 @@ exports.getOldest = (req, res, next) => {
     next({status: 500, error: err})
   });
 };
-// todo
+// not working - FIX
 exports.postContinueMash = (req, res, next) => {
-  res.status(200).send({
-    message: "post continue route working",
-    id: `req.params.id`
+  const newTime = moment().format();
+  let newPhase
+  if (req.body.currPhase === 'body') {
+    newPhase = 'legs'.toString()
+  } else if (req.body.currPhase === 'legs') {
+    newPhase = 'completed'
+  };
+
+  models.Mash.findByIdAndUpdate(req.params.id,{
+    users: { $push: req.userData.id },
+    imageData: { $push: req.body.imageData },
+    phase: { $set: newPhase },
+    lastModified: { $set: newTime }
+  }, {new: true})
+  .then(updatedMash => {
+    res.status(201).send({
+      message: "monster mash update",
+      updatedMash
+    });
+  })
+  .catch(err => {
+    next({status: 500, error: err})
   })
 }
