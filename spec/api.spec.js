@@ -197,13 +197,25 @@ describe('API Endpoints - Success', () => {
     });
 
 
-    it('POST - api/mash/newmash - No imageData in body of request or property is not called imageData' , () => {
+    it('POST - api/mash/newmash - Body imageData roperty is not called imageData' , () => {
       return request
       .post('/api/mash/newmash')
       .set('Authorisation', `Bearer ${token}`)
       .send({
         wrongpropertyimageData: 'test'
       })
+      .then(res => {
+        expect(res.body.error).to.equal("imageData property not found");
+        expect(res.body.status).to.equal(400)
+        expect(res.status).to.equal(400);
+      });
+    })
+
+    it('POST - api/mash/newmash - No imageData property in body of request' , () => {
+      return request
+      .post('/api/mash/newmash')
+      .set('Authorisation', `Bearer ${token}`)
+      .send({})
       .then(res => {
         expect(res.body.error).to.equal("imageData property not found");
         expect(res.body.status).to.equal(400)
