@@ -19,8 +19,8 @@ function dbSeed (dbUrl) {
   .then(([userData]) => {
     console.log(`${userData.length} Users seeded`)
     user1 = userData[0]._id
-    user1 = userData[1]._id
-
+    user2 = userData[1]._id
+    
     const mashes = mashData.map((mash, i) => {
       if (i === 1) {
         mash.users.push(user1, user2)
@@ -35,6 +35,7 @@ function dbSeed (dbUrl) {
   })
   .then(([mashes, userData]) => {
     console.log(`${mashes.length} Monster Mashes seeded`)
+    return[mashes, userData]
   })
   .catch(err => {
     console.log(err);

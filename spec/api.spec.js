@@ -15,7 +15,7 @@ describe('API Endpoints - Success', () => {
   before(() => {
     return dbSeed(test)
     .then(data => {
-      userId = data[0].id
+      userId = data[1][0].id
       console.log('seeding complete')
     })
     .catch(err => {
