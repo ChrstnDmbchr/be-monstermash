@@ -11,11 +11,13 @@ describe('API Endpoints - Success', () => {
   // variables to keep track of id's
   let token
   let userId
+  let mashId
   // seed excecuted before all tests and values assigned to variables
   before(() => {
     return dbSeed(test)
     .then(data => {
       userId = data[1][0].id
+      mashId = data[0][0].id
       console.log('seeding complete')
     })
     .catch(err => {
@@ -80,6 +82,19 @@ describe('API Endpoints - Success', () => {
     })
   })
 
+  it('GET - /api/mash/getmash/:mashid', () => {
+    return request
+    .get(`/api/mash/getmash/${mashId}`)
+    .then(res => {
+      expect(res.status).to.equal(200);
+      expect(res.body.message).to.equal(`monster mash with id: ${mashId}`)
+      expect(res.body.monstermash).to.be.a('object')
+      expect(res.body.monstermash._id).to.equal(mashId)
+    })
+  });
+
+
+  // failure endpoints
   describe('API Endpoints - Failure', () => {
     it('POST - /api/user/signin - Incorrect password', () => {
       return request
@@ -141,6 +156,19 @@ describe('API Endpoints - Success', () => {
         expect(res.body.status).to.equal(400);
         expect(res.body.error).to.equal("username already exists");
         expect(res.status).to.equal(400);
+      });
+    });
+
+    it('GET - /api/mash/getmash/:mashid', () => {
+      it('GET - /api/mash/getmash/:mashid', () => {
+        mashId[0] = '6'
+        return request
+        .get(`/api/mash/getmash/${mashId}`)
+        .then(res => {
+          expect(res.status).to.equal(404);
+          expect(res.body.error).to.equal('monster mash not found');
+          expect(res.body.status).to.equal(404);
+        })
       });
     })
   })

@@ -9,15 +9,25 @@ exports.getAll = (req, res, next) => {
     });
   })
   .catch(err => {
-    next({status: 500, error: err})
+    next({status: 500, error: err});
   });
 };
 
 exports.getByID = (req, res, next) => {
-  res.status(200).send({
-    message: `Get by id ${req.params.mashid} route working`
+  models.Mash.findById(req.params.mashid)
+  .then(mash => {
+    if (!mash) {
+      return next({status: 404, error: 'monster mash not found'})
+    }
+    res.status(200).send({
+      message: `monster mash with id: ${req.params.mashid}`,
+      monstermash: mash
+    });
   })
-}
+  .catch(err => {
+    next({status: 500, error: err});
+  });
+};
 
 exports.getOldest = (req, res, next) => {
   res.status(200).send({
