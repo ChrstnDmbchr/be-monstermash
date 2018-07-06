@@ -15,7 +15,7 @@ exports.getUser = (req, res, next) => {
     });
   })
   .catch(err => next({status: 500, error: err}));
-}
+};
 
 exports.signUserIn = (req, res, next) => {
   models.User.findOne({username: req.body.username})
@@ -32,12 +32,12 @@ exports.signUserIn = (req, res, next) => {
       });
     } else {
       next({status: 401, error: "auth failed"});
-    }
+    };
   })
   .catch(err => {
     next({status: 500, error: err});
   });
-}
+};
 
 exports.signUserUp = (req, res, next) => {
   models.User.findOne({ username: req.body.username })
@@ -49,7 +49,7 @@ exports.signUserUp = (req, res, next) => {
       })
     } else {
       next({status: 400, error: 'username already exists'})
-    }
+    };
   })
   .then(newUser => {
     const token = jwt.sign({ id: newUser._id }, tokenSecret, { expiresIn: "1h" });
@@ -61,4 +61,4 @@ exports.signUserUp = (req, res, next) => {
   .catch(err => {
     next({status: 500, error: err});
   });
-}
+};
