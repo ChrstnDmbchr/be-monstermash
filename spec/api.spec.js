@@ -12,12 +12,14 @@ describe('API Endpoints - Success', () => {
   let token
   let userId
   let mashId
+  let updateMash
   // seed excecuted before all tests and values assigned to variables
   before(() => {
     return dbSeed(test)
     .then(data => {
       userId = data[1][0].id
       mashId = data[0][0].id
+      updateMash = data[0][3].id
       console.log('seeding complete')
     })
     .catch(err => {
@@ -115,9 +117,25 @@ describe('API Endpoints - Success', () => {
     .then(res => {
       expect(res.body.message).to.equal("new monster mash created successfully");
       expect(res.body.mash).to.be.a('object')
-      expect(res.status).to.equal(200);
+      expect(res.status).to.equal(201);
     });
   })
+
+  it('POST - /api/mash/continuemash/:id', () => {
+    return request
+    .post(`/api/mash/continuemash/${updateMash}`)
+    .set('Authorisation', `Bearer ${token}`)
+    .send({
+      imageData: "test data",
+      currPhase: "body",
+    })
+    .then(res => {
+      expect(res.status).to.equal(201);
+      expect(res.body.message).to.equal('monster mash updated');
+      expect(res.body.updatedMash.users.length).to.equal(2);
+      expect(res.body.updatedMash.phase).to.equal('legs')
+    });
+  });
 
 
   // failure endpoints
@@ -222,5 +240,32 @@ describe('API Endpoints - Success', () => {
         expect(res.status).to.equal(400);
       });
     })
+
+    it('POST - /api/mash/continuemash/:id - Incorrect data sent in body', () => {
+      return request
+      .post(`/api/mash/continuemash/${updateMash}`)
+      .set('Authorisation', `Bearer ${token}`)
+      .send({
+        noimageData: "test data",
+        notthecurrPhase: "body",
+      })
+      .then(res => {
+        expect(res.status).to.equal(400);
+        expect(res.body.error).to.equal('body missing either currPhase or ImageData properties')
+        expect(res.body.status).to.equal(400)
+      });
+    });
+
+    it('POST - /api/mash/continuemash/:id - No data sent in body', () => {
+      return request
+      .post(`/api/mash/continuemash/${updateMash}`)
+      .set('Authorisation', `Bearer ${token}`)
+      .send({})
+      .then(res => {
+        expect(res.status).to.equal(400);
+        expect(res.body.error).to.equal('body missing either currPhase or ImageData properties')
+        expect(res.body.status).to.equal(400)
+      });
+    });
   })
 });

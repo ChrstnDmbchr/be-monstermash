@@ -68,23 +68,32 @@ exports.getOldest = (req, res, next) => {
 };
 // not working - FIX
 exports.postContinueMash = (req, res, next) => {
+  if (!req.body.currPhase || !req.body.imageData) {
+    return next({status: 400, error: "body missing either currPhase or ImageData properties"});
+  };
+
   const newTime = moment().format();
+
   let newPhase
   if (req.body.currPhase === 'body') {
-    newPhase = 'legs'.toString()
+    newPhase = 'legs'
   } else if (req.body.currPhase === 'legs') {
     newPhase = 'completed'
   };
 
   models.Mash.findByIdAndUpdate(req.params.id,{
-    users: { $push: req.userData.id },
-    imageData: { $push: req.body.imageData },
-    phase: { $set: newPhase },
-    lastModified: { $set: newTime }
+    $set: {
+      lastModified: newTime,
+      phase: newPhase
+    },
+    $push: {
+      users: req.userData.id,
+      imageData: req.body.imageData
+    }
   }, {new: true})
   .then(updatedMash => {
     res.status(201).send({
-      message: "monster mash update",
+      message: "monster mash updated",
       updatedMash
     });
   })
