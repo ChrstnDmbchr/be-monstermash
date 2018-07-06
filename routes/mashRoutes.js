@@ -5,7 +5,7 @@ const checkAuth = require('../middleware/checkAuth');
 
 router.get("/all", mashController.getAll);
 
-router.get("/mash/:mashid", mashController.getByID)
+router.get("/getmash/:mashid", mashController.getByID)
 
 router.get("/continuemash", checkAuth, mashController.getOldest);
 
