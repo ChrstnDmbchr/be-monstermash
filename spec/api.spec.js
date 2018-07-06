@@ -103,7 +103,7 @@ describe('API Endpoints - Success', () => {
       expect(res.body.mash.users.length).to.equal(1)
       expect(res.body.mash.lastModified).to.equal('2018-07-06T15:22:33.000Z')
     })
-  })
+  });
 
 
   // failure endpoints

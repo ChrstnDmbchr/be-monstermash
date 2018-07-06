@@ -29,7 +29,7 @@ exports.getByID = (req, res, next) => {
     next({status: 500, error: err});
   });
 };
-
+// todo
 exports.postNewMash = (req, res, next) => {
   res.status(200).send({
     message: "post new route working"
@@ -49,7 +49,7 @@ exports.getOldest = (req, res, next) => {
     next({status: 500, error: err})
   });
 };
-
+// todo
 exports.postContinueMash = (req, res, next) => {
   res.status(200).send({
     message: "post continue route working",
