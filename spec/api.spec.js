@@ -78,7 +78,7 @@ describe('API Endpoints - Success', () => {
     .then(res => {
       expect(res.status).to.equal(200);
       expect(res.body.message).to.equal("all monster mashes")
-      expect(res.body.mashes.length).to.equal(3)
+      expect(res.body.mashes.length).to.equal(4)
     })
   })
 
@@ -92,6 +92,18 @@ describe('API Endpoints - Success', () => {
       expect(res.body.monstermash._id).to.equal(mashId)
     })
   });
+
+  it('GET - /api/mash/continuemash', () => {
+    return request
+    .get('/api/mash/continuemash')
+    .set('Authorisation', `Bearer ${token}`)
+    .then(res => {
+      expect(res.status).to.equal(200);
+      expect(res.body.mash.phase).to.equal('body')
+      expect(res.body.mash.users.length).to.equal(1)
+      expect(res.body.mash.lastModified).to.equal('2018-07-06T15:22:33.000Z')
+    })
+  })
 
 
   // failure endpoints

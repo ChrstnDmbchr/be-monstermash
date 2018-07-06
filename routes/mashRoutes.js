@@ -11,6 +11,6 @@ router.post("/newmash", checkAuth, mashController.postNewMash);
 
 router.get("/continuemash", checkAuth, mashController.getOldest);
 
-router.post("/continuemash", checkAuth, mashController.postContinueMash);
+router.post("/continuemash/:id", checkAuth, mashController.postContinueMash);
 
 module.exports = router;
