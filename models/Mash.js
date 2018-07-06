@@ -17,6 +17,10 @@ const MashSchema = new Schema({
   votes: {
     type: Number,
     required: true
+  },
+  lastModified: {
+    type: Date,
+    required: true
   }
 });
 
