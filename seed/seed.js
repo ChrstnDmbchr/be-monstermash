@@ -26,7 +26,7 @@ function dbSeed (dbUrl) {
       if (i === 1) {
         mash.users.push(user1, user2)
         return mash
-      } else if (i === 3) {
+      } else if (i === 3 || i === 4) {
         mash.users.push(user3)
         return mash
       } else {

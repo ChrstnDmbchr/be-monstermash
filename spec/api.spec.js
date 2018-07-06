@@ -78,7 +78,7 @@ describe('API Endpoints - Success', () => {
     .then(res => {
       expect(res.status).to.equal(200);
       expect(res.body.message).to.equal("all monster mashes")
-      expect(res.body.mashes.length).to.equal(4)
+      expect(res.body.mashes.length).to.equal(5)
     })
   })
 
