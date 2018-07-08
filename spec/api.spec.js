@@ -79,10 +79,10 @@ describe('API Endpoints - Success', () => {
     .get('/api/mash/all')
     .then(res => {
       expect(res.status).to.equal(200);
-      expect(res.body.message).to.equal("all monster mashes")
-      expect(res.body.mashes.length).to.equal(5)
-    })
-  })
+      expect(res.body.message).to.equal("all completed monster mashes");
+      expect(res.body.mashes.length).to.equal(5);
+    });
+  });
 
   it('GET - /api/mash/getmash/:mashid', () => {
     return request

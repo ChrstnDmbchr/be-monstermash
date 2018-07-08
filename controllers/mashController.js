@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 
 exports.getAll = (req, res, next) => {
-  models.Mash.find({})
+  models.Mash.find({phase: 'completed'})
   .then(mashes => {
+    console.log(mashes)
     res.status(200).send({
-      message: "all monster mashes",
+      message: "all completed monster mashes",
       mashes
     });
   })
