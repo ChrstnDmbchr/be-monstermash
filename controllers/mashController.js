@@ -5,7 +5,6 @@ const moment = require('moment');
 exports.getAll = (req, res, next) => {
   models.Mash.find({phase: 'completed'})
   .then(mashes => {
-    console.log(mashes)
     res.status(200).send({
       message: "all completed monster mashes",
       mashes
@@ -67,7 +66,7 @@ exports.getOldest = (req, res, next) => {
     next({status: 500, error: err})
   });
 };
-// not working - FIX
+
 exports.postContinueMash = (req, res, next) => {
   if (!req.body.currPhase || !req.body.imageData) {
     return next({status: 400, error: "body missing either currPhase or ImageData properties"});
