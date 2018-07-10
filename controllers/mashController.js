@@ -36,7 +36,7 @@ exports.postNewMash = (req, res, next) => {
     return next({status: 400, error: "imageData property not found"});
   }
   models.Mash.create({
-    users: [req.userData.id],
+    users: [mongoose.Types.ObjectId(req.userData.id)],
     phase: 'body',
     imageData: req.body.imageData,
     votes: 0,
