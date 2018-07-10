@@ -87,7 +87,7 @@ exports.postContinueMash = (req, res, next) => {
       phase: newPhase
     },
     $push: {
-      users: req.userData.id,
+      users: mongoose.Types.ObjectId(req.userData.id),
       imageData: req.body.imageData
     }
   }, {new: true})
