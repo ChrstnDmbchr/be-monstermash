@@ -65,6 +65,7 @@ exports.signUserUp = (req, res, next) => {
     });
   })
   .catch(err => {
+    console.log(err)
     next({status: 500, error: 'error when creating'});
   });
 };
