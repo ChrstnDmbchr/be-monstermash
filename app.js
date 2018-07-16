@@ -18,6 +18,7 @@ if (process.env.NODE_ENV === 'dev') app.use(morgan('dev'));
 app.use(bodyParser);
 app.use(cors());
 
+app.options('*', cors());
 app.use('/api', apiRoutes);
 
 app.use('*', (req, res, next) => {
