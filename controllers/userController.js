@@ -50,6 +50,7 @@ exports.signUserUp = (req, res, next) => {
     };
   })
   .then(hashedPassword => {
+    console.log(hashedPassword)
     return models.User.create({
       username: req.body.username,
       password: hashedPassword
