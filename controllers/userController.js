@@ -53,6 +53,7 @@ exports.signUserUp = (req, res, next) => {
     };
   })
   .then(newUser => {
+    console.log(newUser)
     const token = jwt.sign({ id: newUser._id }, tokenSecret, { expiresIn: "1h" });
     res.status(200).send({
       message: "user successfully created",
