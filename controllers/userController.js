@@ -2,8 +2,8 @@ const models = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const tokenSecret = process.env.MONGODB_URI === undefined ? require('../config').tokenSecret : process.env.TOKEN_SECRET
-const saltRounds = process.env.MONGODB_URI === undefined ? require('../config').saltRounds : process.env.SALT_ROUNDS
+const tokenSecret = !process.env.MONGODB_URI ? require('../config').tokenSecret : process.env.TOKEN_SECRET
+const saltRounds = !process.env.MONGODB_URI ? require('../config').saltRounds : process.env.SALT_ROUNDS
 
 exports.getUser = (req, res, next) => {
   models.User.findById(req.userData.id)
