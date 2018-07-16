@@ -42,7 +42,6 @@ exports.signUserIn = (req, res, next) => {
 exports.signUserUp = (req, res, next) => {
   models.User.findOne({ username: req.body.username })
   .then(user => {
-    console.log(user, 'user returned', req.body.password)
     if (!user) {
       return bcrypt.hash(req.body.password, Number(saltRounds))
     } else {
@@ -50,7 +49,6 @@ exports.signUserUp = (req, res, next) => {
     };
   })
   .then(hashedPassword => {
-    console.log(hashedPassword)
     return models.User.create({
       username: req.body.username,
       password: hashedPassword
@@ -58,7 +56,6 @@ exports.signUserUp = (req, res, next) => {
   })
   .then(newUser => {
     if (!newUser) return;
-    console.log(newUser, 'newUser produced')
     const token = jwt.sign({ id: newUser._id }, tokenSecret, { expiresIn: "1h" });
     res.status(200).send({
       message: "user successfully created",
@@ -67,6 +64,6 @@ exports.signUserUp = (req, res, next) => {
   })
   .catch(err => {
     console.log(err)
-    next({status: 500, error: 'error when creating'});
+    next({status: 500, error: err});
   });
 };
