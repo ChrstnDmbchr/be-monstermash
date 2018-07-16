@@ -44,6 +44,7 @@ exports.signUserUp = (req, res, next) => {
   .then(user => {
     console.log(user, 'user returned')
     if (!user) {
+      console.log('no user')
       return models.User.create({
         username: req.body.username,
         password: bcrypt.hashSync(req.body.password, saltRounds)
