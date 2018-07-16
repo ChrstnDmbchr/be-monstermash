@@ -42,6 +42,7 @@ exports.signUserIn = (req, res, next) => {
 exports.signUserUp = (req, res, next) => {
   models.User.findOne({ username: req.body.username })
   .then(user => {
+    console.log(user)
     if (!user) {
       return models.User.create({
         username: req.body.username,
@@ -55,8 +56,7 @@ exports.signUserUp = (req, res, next) => {
     const token = jwt.sign({ id: newUser._id }, tokenSecret, { expiresIn: "1h" });
     res.status(200).send({
       message: "user successfully created",
-      token,
-      test: newUser
+      token
     });
   })
   .catch(err => {
