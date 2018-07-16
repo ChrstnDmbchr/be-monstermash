@@ -45,9 +45,10 @@ exports.signUserUp = (req, res, next) => {
     console.log(user, 'user returned')
     if (!user) {
       console.log('no user')
+      const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds)
       return models.User.create({
         username: req.body.username,
-        password: bcrypt.hashSync(req.body.password, saltRounds)
+        password: hashedPassword
       })
     } else {
       return next({status: 400, error: 'username already exists'})
