@@ -44,15 +44,16 @@ exports.signUserUp = (req, res, next) => {
   .then(user => {
     console.log(user, 'user returned')
     if (!user) {
-      const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds)
-      console.log('no user', req.body.username, hashedPassword)
-      return models.User.create({
-        username: req.body.username,
-        password: hashedPassword
-      })
+      return bcrypt.hash(req.body.password, saltRounds)
     } else {
       return next({status: 400, error: 'username already exists'})
     };
+  })
+  .then(hashedPassword => {
+    return models.User.create({
+      username: req.body.username,
+      password: hashedPassword
+    })
   })
   .then(newUser => {
     if (!newUser) return;
