@@ -24,6 +24,7 @@ exports.signUserIn = (req, res, next) => {
     return Promise.all([bcrypt.compare(req.body.password, user.password), user]);
   })
   .then(([result, user]) => {
+    console.log('post user check')
     if (result) {
       const token = jwt.sign({ id: user._id }, tokenSecret, { expiresIn: "1h" });
       res.status(200).send({
