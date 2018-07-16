@@ -42,9 +42,9 @@ exports.signUserIn = (req, res, next) => {
 exports.signUserUp = (req, res, next) => {
   models.User.findOne({ username: req.body.username })
   .then(user => {
-    console.log(user, 'user returned')
+    console.log(user, 'user returned', req.body.password)
     if (!user) {
-      return bcrypt.hash(req.body.password, saltRounds)
+      return bcrypt.hash(req.body.password, Number(saltRounds))
     } else {
       return next({status: 400, error: 'username already exists'})
     };
