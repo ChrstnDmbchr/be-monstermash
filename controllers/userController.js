@@ -55,7 +55,8 @@ exports.signUserUp = (req, res, next) => {
     const token = jwt.sign({ id: newUser._id }, tokenSecret, { expiresIn: "1h" });
     res.status(200).send({
       message: "user successfully created",
-      token
+      token,
+      test: newUser
     });
   })
   .catch(err => {
