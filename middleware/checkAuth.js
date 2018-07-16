@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const tokenSecret = require('../config').tokenSecret;
+const tokenSecret = process.env.MONGODB_URI ? process.env.TOKEN_SECRET : require('../config').tokenSecret;
 
 module.exports = (req, res, next) => {
   try { 
