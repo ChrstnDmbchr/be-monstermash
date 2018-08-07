@@ -7,6 +7,17 @@ The Back end of the project is hosted on [Heroku](https://damp-journey-26965.her
 
 ## Prerequisites
 
+#### Configuration 
+A configuration file is required for the application that will contain the number of salt rounds for the password encryption and the token secret for the jwt signing. 
+
+You will need to create a folder in the root of the project called `config` and a file within there called `index.js`.
+
+Within the index file, export two variables with the salt rounds and secret you wish to use, the variables will need to be named the same as below:
+```
+exports.saltRounds = *number of salt rounds you wish to use*
+exports.tokenSecret = *secret you wish to use*
+```
+
 #### Database connections
 The database connections strings are in the `dbconnection` directory and this is where the information is sourced depending on whether the `process.env.NODE_ENV` variable has been set to dev or test. 
 
